@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.1",
   "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "api": "node server/index.js",
     "api:postgres": "node server/run-postgres.js",
@@ -12,6 +15,7 @@
     "dev:api": "node server/index.js",
     "dev:full": "node server/dev-full.js",
     "dev:web": "vite",
+    "start": "node server/index.js",
     "test": "npm run build && npm run test:api && npm run test:frontend && npm run test:e2e",
     "test:api": "node server/smoke-test.js",
     "test:api:sqlite": "node --no-warnings server/smoke-test-sqlite.js",

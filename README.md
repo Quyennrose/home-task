@@ -140,6 +140,7 @@ Seed accounts:
 
 - API contract: [docs/API_CONTRACT.md](docs/API_CONTRACT.md)
 - PostgreSQL reference schema: [docs/DATABASE_SCHEMA.sql](docs/DATABASE_SCHEMA.sql)
+- Deployment guide: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
 - Production checklist: [docs/PRODUCTION_CHECKLIST.md](docs/PRODUCTION_CHECKLIST.md)
 
 ## Deployment
@@ -154,10 +155,12 @@ Frontend deployment:
 Backend deployment:
 
 - Start command: `npm run api`
+- Render-compatible start command: `npm start`
 - Default port: `8787`, or the `PORT` environment variable when provided by the host
 - Set `HOMETASK_DB_DRIVER=postgres` and `DATABASE_URL` for PostgreSQL-backed persistence.
 - Required production override: set a strong `HOMETASK_TOKEN_SECRET`
 - Recommended hosts for the demo backend: Render, Railway, Fly.io, or a small VPS
+- Render blueprint: [render.yaml](render.yaml)
 
 Continuous integration is configured in `.github/workflows/ci.yml`. It installs dependencies with `npm ci`, installs the Chromium browser for Playwright, builds the frontend, runs API smoke tests, runs the frontend smoke test, and runs Playwright E2E tests on every push or pull request to `main`.
 

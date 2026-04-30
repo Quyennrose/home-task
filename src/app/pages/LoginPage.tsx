@@ -81,12 +81,6 @@ export default function LoginPage() {
           <h2 className="mb-2 text-center text-2xl font-bold text-gray-900">Đăng nhập</h2>
           <p className="mb-6 text-center text-sm text-gray-600">Chào mừng bạn trở lại với HomeTask</p>
 
-          {!isBackendConfigured && (
-            <div className="mb-5 rounded-xl border border-yellow-200 bg-yellow-50 px-3 py-2 text-xs text-yellow-800">
-              Đang chạy ở chế độ local. Khi cấu hình `VITE_API_BASE_URL`, ứng dụng sẽ gọi backend qua lớp API.
-            </div>
-          )}
-
           {(!isBackendConfigured || appConfig.enableDemoTools) && (
             <button
               data-testid="login-google-demo"

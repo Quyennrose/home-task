@@ -12,7 +12,17 @@ Storage adapters:
 
 - `npm run api` uses the JSON-backed local adapter by default.
 - `npm run api:sqlite` uses the SQLite-backed adapter.
-- Set `HOMETASK_DB_DRIVER=json|sqlite` to choose explicitly.
+- `npm run api:postgres` uses PostgreSQL through `DATABASE_URL`.
+- Set `HOMETASK_DB_DRIVER=json|sqlite|postgres` to choose explicitly.
+
+PostgreSQL quick start:
+
+```bash
+createdb hometask
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/hometask npm run api:postgres
+```
+
+The current PostgreSQL adapter stores the application state in an `app_state` JSONB table so it can share the same backend contract as the JSON and SQLite adapters. `docs/DATABASE_SCHEMA.sql` remains the normalized production reference schema for a future full relational migration.
 
 Seed accounts:
 

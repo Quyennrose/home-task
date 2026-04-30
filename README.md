@@ -80,6 +80,14 @@ Run the backend with SQLite:
 npm run api:sqlite
 ```
 
+Run the backend with PostgreSQL:
+
+```bash
+createdb hometask
+$env:DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/hometask"
+npm run api:postgres
+```
+
 Run backend smoke tests:
 
 ```bash
@@ -104,6 +112,8 @@ VITE_ENABLE_LOCAL_RESET=true
 HOMETASK_DB_DRIVER=json
 HOMETASK_DATA_FILE=server/data/hometask.json
 HOMETASK_SQLITE_FILE=server/data/hometask.sqlite
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/hometask
+PGSSL=false
 HOMETASK_TOKEN_SECRET=change-me
 ```
 
@@ -138,6 +148,7 @@ Backend deployment:
 
 - Start command: `npm run api`
 - Default port: `8787`, or the `PORT` environment variable when provided by the host
+- Set `HOMETASK_DB_DRIVER=postgres` and `DATABASE_URL` for PostgreSQL-backed persistence.
 - Required production override: set a strong `HOMETASK_TOKEN_SECRET`
 - Recommended hosts for the demo backend: Render, Railway, Fly.io, or a small VPS
 

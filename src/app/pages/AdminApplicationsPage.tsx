@@ -28,10 +28,10 @@ export default function AdminApplicationsPage() {
       await localApi.helperApplications.updateStatus(helperId, status);
       await localApi.notifications.create({
         userId: helperId,
-        title: status === 'approved' ? 'Ho so da duoc duyet' : 'Ho so bi tu choi',
+        title: status === 'approved' ? 'Hồ sơ đã được duyệt' : 'Hồ sơ bị từ chối',
         message: status === 'approved'
-          ? 'Ban da co the nhan lich dat moi trong HomeTask.'
-          : 'Vui long kiem tra lai thong tin va bo sung ho so neu can.',
+          ? 'Bạn đã có thể nhận lịch đặt mới trong HomeTask.'
+          : 'Vui lòng kiểm tra lại thông tin và bổ sung hồ sơ nếu cần.',
       });
       refreshApplications();
     } catch (nextError) {
@@ -46,11 +46,11 @@ export default function AdminApplicationsPage() {
       <div className="mb-5">
         <div className="inline-flex items-center gap-2 bg-[#6366F1]/10 text-[#6366F1] px-3 py-1.5 rounded-full text-xs font-medium mb-3">
           <Shield className="w-3 h-3" />
-          Quan tri
+          Quản trị
         </div>
-        <h1 className="text-2xl font-bold text-[#1A365D] mb-2">Duyet ho so nguoi giup viec</h1>
+        <h1 className="text-2xl font-bold text-[#1A365D] mb-2">Duyệt hồ sơ người giúp việc</h1>
         <p className="text-gray-600 text-sm">
-          Kiem tra thong tin ung tuyen, khu vuc nhan viec va giay to xac minh truoc khi mo nhan lich.
+          Kiểm tra thông tin ứng tuyển, khu vực nhận việc và giấy tờ xác minh trước khi mở nhận lịch.
         </p>
       </div>
 
@@ -58,12 +58,12 @@ export default function AdminApplicationsPage() {
         <div className="bg-white rounded-2xl p-4">
           <ClipboardCheck className="w-5 h-5 text-[#6366F1] mb-2" />
           <div className="text-2xl font-bold text-[#1A365D]">{pendingApplications}</div>
-          <div className="text-xs text-gray-600">Ho so cho duyet</div>
+          <div className="text-xs text-gray-600">Hồ sơ chờ duyệt</div>
         </div>
         <div className="bg-white rounded-2xl p-4">
           <CheckCircle className="w-5 h-5 text-green-600 mb-2" />
           <div className="text-2xl font-bold text-[#1A365D]">{applications.length}</div>
-          <div className="text-xs text-gray-600">Tong ho so</div>
+          <div className="text-xs text-gray-600">Tổng hồ sơ</div>
         </div>
       </div>
 
@@ -75,7 +75,7 @@ export default function AdminApplicationsPage() {
 
       {loading ? (
         <div className="bg-white rounded-2xl p-5 text-center shadow-sm">
-          <p className="text-gray-600 text-sm">Dang tai ho so...</p>
+          <p className="text-gray-600 text-sm">Đang tải hồ sơ...</p>
         </div>
       ) : applications.length > 0 ? (
         <div className="space-y-3">
@@ -94,30 +94,31 @@ export default function AdminApplicationsPage() {
                       : 'bg-yellow-100 text-yellow-700'
                 }`}>
                   {application.applicationStatus === 'approved'
-                    ? 'Da duyet'
+                    ? 'Đã duyệt'
                     : application.applicationStatus === 'rejected'
-                      ? 'Tu choi'
-                      : 'Cho duyet'}
+                      ? 'Từ chối'
+                      : 'Chờ duyệt'}
                 </span>
               </div>
 
               <div className="space-y-2 text-xs text-gray-600 mb-4">
-                <p>Kinh nghiem: {application.experience}</p>
-                <p>Khu vuc: {application.serviceAreas?.join(', ') || application.location}</p>
-                <p>Lich lam: {application.availability?.join(', ')}</p>
-                <p>Ngan hang: {application.bankName || 'Chua khai bao'} {application.bankAccount ? `- ${application.bankAccount}` : ''}</p>
-                <p>Giay to: {application.identityDocumentName || 'Chua tai len'}</p>
-                {application.applicationNote && <p>Ghi chu: {application.applicationNote}</p>}
+                <p>Kinh nghiệm: {application.experience}</p>
+                <p>Khu vực: {application.serviceAreas?.join(', ') || application.location}</p>
+                <p>Lịch làm: {application.availability?.join(', ')}</p>
+                <p>Ngân hàng: {application.bankName || 'Chưa khai báo'} {application.bankAccount ? `- ${application.bankAccount}` : ''}</p>
+                <p>Giấy tờ: {application.identityDocumentName || 'Chưa tải lên'}</p>
+                {application.applicationNote && <p>Ghi chú: {application.applicationNote}</p>}
               </div>
 
               <div className="grid grid-cols-2 gap-2">
                 <button
                   type="button"
+                  data-testid={`admin-approve-${application.id}`}
                   onClick={() => handleStatusChange(application.id, 'approved')}
                   disabled={application.applicationStatus === 'approved'}
                   className="px-3 py-2 bg-green-600 disabled:bg-gray-300 text-white rounded-xl text-xs font-semibold"
                 >
-                  Duyet ho so
+                  Duyệt hồ sơ
                 </button>
                 <button
                   type="button"
@@ -125,7 +126,7 @@ export default function AdminApplicationsPage() {
                   disabled={application.applicationStatus === 'rejected'}
                   className="px-3 py-2 bg-red-50 disabled:bg-gray-100 text-red-600 border border-red-200 rounded-xl text-xs font-semibold"
                 >
-                  Tu choi
+                  Từ chối
                 </button>
               </div>
             </div>
@@ -134,8 +135,8 @@ export default function AdminApplicationsPage() {
       ) : (
         <div className="bg-white rounded-2xl p-5 text-center shadow-sm">
           <ClipboardCheck className="w-10 h-10 text-[#6366F1] mx-auto mb-3" />
-          <h3 className="font-semibold text-[#1A365D] mb-1">Chua co ho so ung tuyen</h3>
-          <p className="text-gray-600 text-sm">Khi nguoi giup viec nop don, admin se thay ho so tai day.</p>
+          <h3 className="font-semibold text-[#1A365D] mb-1">Chưa có hồ sơ ứng tuyển</h3>
+          <p className="text-gray-600 text-sm">Khi người giúp việc nộp đơn, admin sẽ thấy hồ sơ tại đây.</p>
         </div>
       )}
     </section>

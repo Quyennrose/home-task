@@ -24,7 +24,7 @@ const initialBookingFormData = {
   notes: '',
 };
 
-const formatCurrency = (value: number) => `${value.toLocaleString('vi-VN')} d`;
+const formatCurrency = (value: number) => `${value.toLocaleString('vi-VN')} đ`;
 
 const getTodayInputValue = () => {
   const today = new Date();
@@ -36,7 +36,7 @@ const getTodayInputValue = () => {
 export function BookingModal({
   isOpen,
   onClose,
-  service = 'Don dep nha',
+  service = 'Dọn dẹp nhà',
   helperName,
   helperId = '',
   hourlyRate = 80000,
@@ -59,7 +59,7 @@ export function BookingModal({
       const booking = await localApi.bookings.create({
         customerId: user?.id ?? 'guest',
         helperId,
-        helperName: helperName || 'Chua chon nhan vien',
+        helperName: helperName || 'Chưa chọn nhân viên',
         service,
         date: formData.date,
         time: formData.time,
@@ -72,15 +72,15 @@ export function BookingModal({
       onBookingCreated?.(booking);
       await localApi.notifications.create({
         userId: booking.customerId,
-        title: 'Da tao lich dat',
-        message: `${booking.service} vao ${new Date(booking.date).toLocaleDateString('vi-VN')} luc ${booking.time}.`,
+        title: 'Đã tạo lịch đặt',
+        message: `${booking.service} vào ${new Date(booking.date).toLocaleDateString('vi-VN')} lúc ${booking.time}.`,
       });
 
       if (booking.helperId) {
         await localApi.notifications.create({
           userId: booking.helperId,
-          title: 'Ban co lich dat moi',
-          message: `${booking.service} vao ${new Date(booking.date).toLocaleDateString('vi-VN')} luc ${booking.time}.`,
+          title: 'Bạn có lịch đặt mới',
+          message: `${booking.service} vào ${new Date(booking.date).toLocaleDateString('vi-VN')} lúc ${booking.time}.`,
         });
       }
 
@@ -127,7 +127,7 @@ export function BookingModal({
             >
               <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
                 <div>
-                  <h2 className="text-gray-900 text-2xl font-semibold">Dat lich dich vu</h2>
+                  <h2 className="text-gray-900 text-2xl font-semibold">Đặt lịch dịch vụ</h2>
                   {service && <p className="text-blue-600 text-sm mt-1">{service}</p>}
                   {helperName && (
                     <p className="text-gray-600 text-sm flex items-center gap-1 mt-1">
@@ -139,7 +139,7 @@ export function BookingModal({
                 <button
                   onClick={handleClose}
                   type="button"
-                  aria-label="Dong"
+                  aria-label="Đóng"
                   className="text-gray-400 hover:text-gray-600 transition-colors"
                 >
                   <X className="w-6 h-6" />
@@ -152,17 +152,18 @@ export function BookingModal({
                     <CheckCircle className="w-7 h-7 text-green-600" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">Dat lich thanh cong</h3>
+                    <h3 className="text-lg font-semibold text-gray-900">Đặt lịch thành công</h3>
                     <p className="text-gray-600 text-sm mt-2">
-                      HomeTask da ghi nhan yeu cau va se cap nhat trang thai trong danh sach lich.
+                      HomeTask đã ghi nhận yêu cầu và sẽ cập nhật trạng thái trong danh sách lịch.
                     </p>
                   </div>
                   <button
+                    data-testid="booking-success-done"
                     type="button"
                     onClick={handleClose}
                     className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors"
                   >
-                    Hoan tat
+                    Hoàn tất
                   </button>
                 </div>
               ) : (
@@ -176,9 +177,10 @@ export function BookingModal({
                   <div>
                     <label className="text-gray-700 font-medium mb-2 flex items-center gap-2">
                       <Calendar className="w-4 h-4 text-blue-600" />
-                      Ngay lam viec
+                      Ngày làm việc
                     </label>
                     <input
+                      data-testid="booking-date"
                       type="date"
                       required
                       value={formData.date}
@@ -191,9 +193,10 @@ export function BookingModal({
                   <div>
                     <label className="text-gray-700 font-medium mb-2 flex items-center gap-2">
                       <Clock className="w-4 h-4 text-blue-600" />
-                      Gio bat dau
+                      Giờ bắt đầu
                     </label>
                     <input
+                      data-testid="booking-time"
                       type="time"
                       required
                       value={formData.time}
@@ -203,41 +206,43 @@ export function BookingModal({
                   </div>
 
                   <div>
-                    <label className="block text-gray-700 font-medium mb-2">So gio lam viec</label>
+                    <label className="block text-gray-700 font-medium mb-2">Số giờ làm việc</label>
                     <select
+                      data-testid="booking-hours"
                       value={formData.hours}
                       onChange={(event) => setFormData({ ...formData, hours: event.target.value })}
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
-                      <option value="2">2 gio</option>
-                      <option value="3">3 gio</option>
-                      <option value="4">4 gio</option>
-                      <option value="6">6 gio</option>
-                      <option value="8">8 gio</option>
+                      <option value="2">2 giờ</option>
+                      <option value="3">3 giờ</option>
+                      <option value="4">4 giờ</option>
+                      <option value="6">6 giờ</option>
+                      <option value="8">8 giờ</option>
                     </select>
                   </div>
 
                   <div>
                     <label className="text-gray-700 font-medium mb-2 flex items-center gap-2">
                       <MapPin className="w-4 h-4 text-blue-600" />
-                      Dia chi
+                      Địa chỉ
                     </label>
                     <input
+                      data-testid="booking-address"
                       type="text"
                       required
                       value={formData.address}
                       onChange={(event) => setFormData({ ...formData, address: event.target.value })}
-                      placeholder="Nhap dia chi cua ban"
+                      placeholder="Nhập địa chỉ của bạn"
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-gray-700 font-medium mb-2">Ghi chu tuy chon</label>
+                    <label className="block text-gray-700 font-medium mb-2">Ghi chú tùy chọn</label>
                     <textarea
                       value={formData.notes}
                       onChange={(event) => setFormData({ ...formData, notes: event.target.value })}
-                      placeholder="Them yeu cau dac biet..."
+                      placeholder="Thêm yêu cầu đặc biệt..."
                       rows={3}
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                     />
@@ -245,15 +250,15 @@ export function BookingModal({
 
                   <div className="bg-blue-50 rounded-xl p-4">
                     <div className="flex justify-between text-sm mb-1">
-                      <span className="text-gray-600">Gia dich vu ({formData.hours}h)</span>
+                      <span className="text-gray-600">Giá dịch vụ ({formData.hours}h)</span>
                       <span className="font-semibold text-gray-900">{formatCurrency(servicePrice)}</span>
                     </div>
                     <div className="flex justify-between text-sm mb-2">
-                      <span className="text-gray-600">Phi di chuyen</span>
+                      <span className="text-gray-600">Phí di chuyển</span>
                       <span className="font-semibold text-gray-900">{formatCurrency(travelFee)}</span>
                     </div>
                     <div className="border-t border-blue-200 pt-2 flex justify-between">
-                      <span className="font-semibold text-gray-900">Tong cong</span>
+                      <span className="font-semibold text-gray-900">Tổng cộng</span>
                       <span className="font-bold text-blue-600 text-lg">{formatCurrency(totalPrice)}</span>
                     </div>
                   </div>
@@ -264,13 +269,14 @@ export function BookingModal({
                       onClick={handleCancel}
                       className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors"
                     >
-                      Huy
+                      Hủy
                     </button>
                     <button
+                      data-testid="booking-submit"
                       type="submit"
                       className="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors"
                     >
-                      Xac nhan
+                      Xác nhận
                     </button>
                   </div>
                 </form>

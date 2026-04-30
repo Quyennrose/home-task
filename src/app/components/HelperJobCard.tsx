@@ -220,6 +220,7 @@ export function HelperJobCard({ booking, onBookingUpdated }: HelperJobCardProps)
       {booking.status === 'pending' && (
         <div className="grid grid-cols-2 gap-2 mb-4">
           <button
+            data-testid={`helper-accept-${booking.id}`}
             type="button"
             onClick={() => handleStatusChange('confirmed')}
             className="px-3 py-2 bg-green-600 text-white rounded-xl text-xs font-semibold"

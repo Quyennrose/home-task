@@ -87,7 +87,7 @@ export default function AdminBookingsPage() {
 
       {loading ? (
         <div className="bg-[#F0F4F8] rounded-2xl p-5 text-center">
-          <p className="text-gray-600 text-sm">Dang tai lich dat...</p>
+          <p className="text-gray-600 text-sm">Đang tải lịch đặt...</p>
         </div>
       ) : filteredBookings.length > 0 ? (
         <div className="space-y-3">

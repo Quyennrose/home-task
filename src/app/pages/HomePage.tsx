@@ -629,6 +629,7 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col gap-3">
               <button
+                data-testid="home-book-service"
                 onClick={() => handleServiceClick("Dọn dẹp nhà")}
                 className="w-full px-6 py-3 bg-[#6366F1] hover:bg-[#4F46E5] text-white rounded-xl font-semibold transition-colors shadow-lg shadow-[#6366F1]/30"
               >
@@ -817,6 +818,7 @@ export default function HomePage() {
               Đặt lịch ngay hôm nay và nhận ưu đãi 20% cho lần đầu sử dụng
             </p>
             <button
+              data-testid="home-cta-book-service"
               onClick={() => handleServiceClick("Dọn dẹp nhà")}
               className="w-full px-6 py-3 bg-[#6366F1] hover:bg-[#4F46E5] text-white rounded-xl font-semibold transition-colors shadow-xl"
             >

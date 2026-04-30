@@ -89,6 +89,7 @@ export default function LoginPage() {
 
           {(!isBackendConfigured || appConfig.enableDemoTools) && (
             <button
+              data-testid="login-google-demo"
               onClick={handleGoogleLogin}
               disabled={loading}
               className="mb-5 flex w-full items-center justify-center gap-2 rounded-xl border-2 border-gray-300 px-5 py-3 font-medium text-gray-700 transition-all hover:border-blue-600 hover:text-blue-600 disabled:opacity-50"
@@ -101,6 +102,7 @@ export default function LoginPage() {
           {appConfig.enableDemoTools && (
             <>
               <button
+                data-testid="login-helper-demo"
                 onClick={handleHelperDemoLogin}
                 disabled={loading}
                 className="mb-5 flex w-full items-center justify-center gap-2 rounded-xl border-2 border-[#6366F1] bg-[#6366F1]/5 px-5 py-3 font-medium text-[#6366F1] transition-all hover:bg-[#6366F1]/10 disabled:opacity-50"
@@ -110,6 +112,7 @@ export default function LoginPage() {
               </button>
 
               <button
+                data-testid="login-admin-demo"
                 onClick={handleAdminDemoLogin}
                 disabled={loading}
                 className="mb-5 flex w-full items-center justify-center gap-2 rounded-xl border-2 border-gray-300 px-5 py-3 font-medium text-gray-700 transition-all hover:border-[#1A365D] hover:text-[#1A365D] disabled:opacity-50"
@@ -171,6 +174,7 @@ export default function LoginPage() {
             </div>
 
             <button
+              data-testid="login-email-submit"
               type="submit"
               disabled={loading}
               className="w-full rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-700 disabled:opacity-50"

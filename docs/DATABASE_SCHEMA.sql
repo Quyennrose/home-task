@@ -130,9 +130,22 @@ create table payments (
   updated_at timestamptz not null default now()
 );
 
+create table audit_logs (
+  id uuid primary key default gen_random_uuid(),
+  actor_id uuid references users(id),
+  actor_type text not null,
+  actor_name text,
+  action text not null,
+  target_type text not null,
+  target_id uuid,
+  metadata jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default now()
+);
+
 create index bookings_customer_id_idx on bookings(customer_id);
 create index bookings_helper_id_idx on bookings(helper_id);
 create index bookings_status_idx on bookings(status);
 create index booking_chat_messages_booking_id_idx on booking_chat_messages(booking_id);
 create index notifications_user_id_read_idx on notifications(user_id, read);
 create index booking_reviews_helper_id_idx on booking_reviews(helper_id);
+create index audit_logs_action_created_at_idx on audit_logs(action, created_at desc);

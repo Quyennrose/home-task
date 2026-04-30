@@ -22,7 +22,7 @@ createdb hometask
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/hometask npm run api:postgres
 ```
 
-The current PostgreSQL adapter stores the application state in an `app_state` JSONB table so it can share the same backend contract as the JSON and SQLite adapters. `docs/DATABASE_SCHEMA.sql` remains the normalized production reference schema for a future full relational migration.
+The PostgreSQL adapter stores records in separate entity tables (`users`, `helper_profiles`, `customer_profiles`, `bookings`, `booking_progress`, `booking_reviews`, `notifications`, `booking_chat_messages`, `assets`, `payments`, and `audit_logs`). Each table keeps indexed relational columns for common queries and a `data` JSONB column for the full current app payload, so the backend contract stays compatible with the JSON and SQLite adapters while moving away from a single application-state blob. If an older database still has the legacy `app_state` table, the adapter imports it into the entity tables on first read. `docs/DATABASE_SCHEMA.sql` remains the stricter production reference schema.
 
 Seed accounts:
 

@@ -63,10 +63,15 @@ function RoleRoute({
 }
 
 function PublicRoute({ children }: { children: ReactNode }) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
 
   if (isAuthenticated) {
-    return <Navigate to="/home" replace />;
+    const defaultPath = user?.userType === 'admin'
+      ? '/admin/applications'
+      : user?.userType === 'helper'
+        ? '/helper/jobs'
+        : '/home';
+    return <Navigate to={defaultPath} replace />;
   }
 
   return <RoutePage>{children}</RoutePage>;

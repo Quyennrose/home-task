@@ -9,7 +9,7 @@ HomeTask is a demo home-cleaning booking app with customer, helper, and admin wo
 - Customer flow: register or log in, browse helpers, book services, track job progress, chat, cancel pending bookings, make mock payments, and review completed jobs.
 - Helper flow: accept or reject jobs, check in and out with GPS, update task checklists, upload completion photos, and maintain a work profile.
 - Admin flow: review helper applications, inspect all bookings, and monitor operational audit logs.
-- Local backend: supports JSON or SQLite storage, token authentication, payload validation, role-based access checks, lightweight rate limiting, and audit logging.
+- Local backend: supports JSON, SQLite, or PostgreSQL storage, token authentication, payload validation, role-based access checks, lightweight rate limiting, and audit logging.
 - Flexible runtime: uses `localStorage` when no API URL is configured, then switches to the backend when `VITE_API_BASE_URL` is set.
 
 ## Demo Flow
@@ -95,6 +95,13 @@ npm run test:api
 npm run test:api:sqlite
 ```
 
+Run frontend tests:
+
+```bash
+npm run test:frontend
+npm run test:e2e
+```
+
 Run the full verification suite:
 
 ```bash
@@ -152,10 +159,11 @@ Backend deployment:
 - Required production override: set a strong `HOMETASK_TOKEN_SECRET`
 - Recommended hosts for the demo backend: Render, Railway, Fly.io, or a small VPS
 
-Continuous integration is configured in `.github/workflows/ci.yml`. It installs dependencies with `npm ci`, builds the frontend, runs the API smoke test, and runs the frontend smoke test on every push or pull request to `main`.
+Continuous integration is configured in `.github/workflows/ci.yml`. It installs dependencies with `npm ci`, installs the Chromium browser for Playwright, builds the frontend, runs API smoke tests, runs the frontend smoke test, and runs Playwright E2E tests on every push or pull request to `main`.
 
 ## Technical Notes
 
 - Business flows go through `src/app/utils/localApi.ts`; this layer calls the API server when `VITE_API_BASE_URL` is configured and falls back to `localStorage` in local mode.
 - The API server validates payloads, enforces booking ownership by customer/helper/admin role, writes audit logs for important changes, and rate-limits auth/chat/upload/payment routes.
+- The PostgreSQL adapter stores app entities in separate tables with indexed relational columns and JSONB payload snapshots for compatibility with the local adapters.
 - GPS works on `localhost` after the browser grants location permission. The demo estimates distance from Da Nang district keywords and warns about far check-ins.

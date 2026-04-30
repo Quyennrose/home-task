@@ -1,0 +1,95 @@
+/**
+ * Scroll Reveal Animation Engine
+ * Siêu nhẹ, tối ưu hiệu suất với CSS transitions
+ */
+
+/* Trạng thái tĩnh: Ẩn và sẵn sàng cho animation */
+[data-vibe="reveal"] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  /* will-change giúp browser optimize rendering */
+  will-change: opacity, transform;
+}
+
+/* Trạng thái động: Vũ điệu nhẹ nhàng khi revealed */
+[data-vibe="reveal"].revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Optimization: Remove will-change sau khi animation hoàn tất */
+[data-vibe="reveal"].revealed {
+  /* Delay 1.2s để match với transition duration */
+  animation: removeWillChange 0s 1.2s forwards;
+}
+
+@keyframes removeWillChange {
+  to {
+    will-change: auto;
+  }
+}
+
+/* Variants cho các hiệu ứng khác nhau (optional) */
+
+/* Fade từ trái */
+[data-vibe="reveal"][data-direction="left"] {
+  transform: translateX(-30px) translateY(0);
+}
+
+[data-vibe="reveal"][data-direction="left"].revealed {
+  transform: translateX(0) translateY(0);
+}
+
+/* Fade từ phải */
+[data-vibe="reveal"][data-direction="right"] {
+  transform: translateX(30px) translateY(0);
+}
+
+[data-vibe="reveal"][data-direction="right"].revealed {
+  transform: translateX(0) translateY(0);
+}
+
+/* Scale + Fade (cho cards/images) */
+[data-vibe="reveal"][data-effect="scale"] {
+  transform: scale(0.95) translateY(20px);
+}
+
+[data-vibe="reveal"][data-effect="scale"].revealed {
+  transform: scale(1) translateY(0);
+}
+
+/* Stagger delay cho list items */
+[data-vibe="reveal"][data-delay="1"] {
+  transition-delay: 0.1s;
+}
+
+[data-vibe="reveal"][data-delay="2"] {
+  transition-delay: 0.2s;
+}
+
+[data-vibe="reveal"][data-delay="3"] {
+  transition-delay: 0.3s;
+}
+
+[data-vibe="reveal"][data-delay="4"] {
+  transition-delay: 0.4s;
+}
+
+[data-vibe="reveal"][data-delay="5"] {
+  transition-delay: 0.5s;
+}
+
+[data-vibe="reveal"][data-delay="6"] {
+  transition-delay: 0.6s;
+}
+
+/* Reduced motion support cho accessibility */
+@media (prefers-reduced-motion: reduce) {
+  [data-vibe="reveal"] {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}

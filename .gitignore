@@ -1,0 +1,14 @@
+node_modules/
+dist/
+
+.env
+.env.local
+.env.*.local
+
+server/data/*.json
+server/data/*.sqlite
+server/data/*.sqlite-*
+*.log
+
+node-v*-win-x64/
+node-v*-win-x64.zip

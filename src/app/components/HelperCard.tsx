@@ -1,6 +1,5 @@
 import { motion } from "motion/react";
-import { Star, MapPin, Shield, Clock } from "lucide-react";
-import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
+import { Clock, MapPin, Shield, Star } from "lucide-react";
 
 interface HelperCardProps {
   name: string;
@@ -17,6 +16,8 @@ interface HelperCardProps {
   detailsLabel?: string;
 }
 
+const fallbackImage = 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&h=400&fit=crop';
+
 export function HelperCard({
   name,
   service,
@@ -29,7 +30,7 @@ export function HelperCard({
   delay = 0,
   onBook,
   onViewDetails,
-  detailsLabel = "Xem chi tiết"
+  detailsLabel = "View details"
 }: HelperCardProps) {
   return (
     <motion.div
@@ -39,15 +40,18 @@ export function HelperCard({
       className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all border border-gray-100"
     >
       <div className="relative h-48 bg-gradient-to-br from-blue-100 to-blue-50">
-        <ImageWithFallback 
+        <img
           src={imageUrl}
           alt={name}
           className="w-full h-full object-cover"
+          onError={(event) => {
+            event.currentTarget.src = fallbackImage;
+          }}
         />
         {verified && (
           <div className="absolute top-3 right-3 bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1">
             <Shield className="w-3 h-3" />
-            Đã xác thực
+            Verified
           </div>
         )}
       </div>
@@ -71,20 +75,20 @@ export function HelperCard({
 
         <div className="flex items-center gap-1 text-gray-500 text-sm mb-4">
           <Clock className="w-4 h-4 flex-shrink-0" />
-          <span>{experience} kinh nghiệm</span>
+          <span>{experience} experience</span>
         </div>
 
         <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
-          <span>{reviews} đánh giá</span>
+          <span>{reviews} reviews</span>
           <div className="flex gap-0.5">
             {[...Array(5)].map((_, i) => (
-              <Star 
-                key={i} 
+              <Star
+                key={i}
                 className={`w-3 h-3 ${
-                  i < Math.floor(rating) 
-                    ? "text-yellow-500 fill-yellow-500" 
+                  i < Math.floor(rating)
+                    ? "text-yellow-500 fill-yellow-500"
                     : "text-gray-300"
-                }`} 
+                }`}
               />
             ))}
           </div>
@@ -105,7 +109,7 @@ export function HelperCard({
             onClick={onBook}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-xl transition-colors"
           >
-            Đặt lịch ngay
+            Book now
           </button>
         </div>
       </div>

@@ -12,16 +12,25 @@ HomeTask is a demo home-cleaning booking app with customer, helper, and admin wo
 - Local backend: supports JSON or SQLite storage, token authentication, payload validation, role-based access checks, lightweight rate limiting, and audit logging.
 - Flexible runtime: uses `localStorage` when no API URL is configured, then switches to the backend when `VITE_API_BASE_URL` is set.
 
+## Demo Flow
+
+1. Start the API with `npm run api`.
+2. Start the web app with `npm run dev`.
+3. Open `http://localhost:5173`.
+4. Use the helper demo to accept and progress jobs from `/helper/jobs`.
+5. Use the admin demo to review helper applications, bookings, and audit logs.
+6. Use a customer account or the Google demo to book a cleaning service, chat, pay, and review a completed booking.
+
 ## Getting Started
 
-Use the normal commands below if Node.js is installed and `npm` is available in your terminal.
+Install Node.js 22 LTS or newer, then run:
 
 ```bash
 npm i
 npm run dev
 ```
 
-On this bundled Windows copy, `npm` may not be available in `PATH`. In that case, use the included portable Node build:
+If you are using a local classroom bundle that includes `node-v22.13.1-win-x64`, but `npm` is not available in `PATH`, run npm through that portable copy:
 
 ```powershell
 .\node-v22.13.1-win-x64\npm.cmd i
@@ -33,6 +42,12 @@ Or add the portable Node folder to the current PowerShell session, then use `npm
 ```powershell
 $env:PATH = (Resolve-Path .\node-v22.13.1-win-x64).Path + ';' + $env:PATH
 npm run dev
+```
+
+If PowerShell blocks `npm.ps1`, use `npm.cmd` instead:
+
+```powershell
+npm.cmd run dev
 ```
 
 Run the local backend:
@@ -72,6 +87,12 @@ npm run test:api
 npm run test:api:sqlite
 ```
 
+Run the full verification suite:
+
+```bash
+npm test
+```
+
 ## Environment
 
 Copy `.env.example` to `.env` and configure the values you need:
@@ -103,6 +124,24 @@ Seed accounts:
 - API contract: [docs/API_CONTRACT.md](docs/API_CONTRACT.md)
 - PostgreSQL reference schema: [docs/DATABASE_SCHEMA.sql](docs/DATABASE_SCHEMA.sql)
 - Production checklist: [docs/PRODUCTION_CHECKLIST.md](docs/PRODUCTION_CHECKLIST.md)
+
+## Deployment
+
+Frontend deployment:
+
+- Build command: `npm run build`
+- Output directory: `dist`
+- Recommended static hosts: Vercel, Netlify, GitHub Pages, or Cloudflare Pages
+- Set `VITE_API_BASE_URL` to the deployed API URL if the frontend should use API mode.
+
+Backend deployment:
+
+- Start command: `npm run api`
+- Default port: `8787`, or the `PORT` environment variable when provided by the host
+- Required production override: set a strong `HOMETASK_TOKEN_SECRET`
+- Recommended hosts for the demo backend: Render, Railway, Fly.io, or a small VPS
+
+Continuous integration is configured in `.github/workflows/ci.yml`. It installs dependencies with `npm ci`, builds the frontend, runs the API smoke test, and runs the frontend smoke test on every push or pull request to `main`.
 
 ## Technical Notes
 

@@ -21,7 +21,7 @@ function RoutePage({ children }: { children: ReactNode }) {
     <Suspense
       fallback={(
         <div className="min-h-screen bg-[#F0F4F8] flex items-center justify-center text-sm text-gray-600">
-          Đang tải...
+          Loading...
         </div>
       )}
     >
@@ -30,7 +30,6 @@ function RoutePage({ children }: { children: ReactNode }) {
   );
 }
 
-// Protected Layout Wrapper
 function ProtectedLayout() {
   const { isAuthenticated } = useAuth();
 
@@ -63,7 +62,6 @@ function RoleRoute({
   return <RoutePage>{children}</RoutePage>;
 }
 
-// Public Route Wrapper (redirect to home if already authenticated)
 function PublicRoute({ children }: { children: ReactNode }) {
   const { isAuthenticated } = useAuth();
 

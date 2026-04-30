@@ -11,8 +11,10 @@
     "dev:api": "node server/index.js",
     "dev:full": "node server/dev-full.js",
     "dev:web": "vite",
+    "test": "npm run build && npm run test:api && npm run test:frontend",
     "test:api": "node server/smoke-test.js",
-    "test:api:sqlite": "node --no-warnings server/smoke-test-sqlite.js"
+    "test:api:sqlite": "node --no-warnings server/smoke-test-sqlite.js",
+    "test:frontend": "node scripts/frontend-smoke-test.js"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",

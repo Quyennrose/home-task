@@ -1,6 +1,12 @@
 # HomeTask Deployment
 
-The frontend is already deployable on Vercel. To make the demo use a real backend and PostgreSQL database, deploy the API separately and then point Vercel at that API.
+The frontend is already deployed on Vercel:
+
+```text
+https://home-task-fawn.vercel.app/
+```
+
+To make the demo use a real backend and PostgreSQL database, deploy the API separately and then point Vercel at that API.
 
 ## Recommended Free/Low-Cost Setup
 

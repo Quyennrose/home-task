@@ -2,6 +2,8 @@
 
 HomeTask is a demo home-cleaning booking app with customer, helper, and admin workflows. It can run fully in the browser with `localStorage`, or connect to the included local backend for testing authentication, booking, job progress, reviews, notifications, mock payments, and audit logs.
 
+Live demo: https://home-task-fawn.vercel.app/
+
 ![HomeTask app preview](docs/app-preview.png)
 
 ## Key Features
@@ -147,6 +149,7 @@ Seed accounts:
 
 Frontend deployment:
 
+- Current live frontend: https://home-task-fawn.vercel.app/
 - Build command: `npm run build`
 - Output directory: `dist`
 - Recommended static hosts: Vercel, Netlify, GitHub Pages, or Cloudflare Pages
